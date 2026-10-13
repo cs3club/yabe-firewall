@@ -6,11 +6,13 @@
 #   ansible-playbook site.yml                  (apply)
 #   ansible-playbook site.yml --tags <tag>     (run one role only)
 
-- name: All plays
-  hosts: all
-  become: true
-  gather_facts: true
-  roles: []
+- name: Firewall devices
+  hosts: firewalls
+  gather_facts: false
+  roles:
+    - role: mikrotik
+      tags: mikrotik
+
   # Add roles here as you build them, e.g.:
   # roles:
   #   - role: vyos
