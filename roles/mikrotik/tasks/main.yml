@@ -1,0 +1,12 @@
+# lists current firewall filter rules. changes nothing.
+
+- name: Read current firewall filter rules
+  community.routeros.command:
+    commands:
+      - /ip firewall filter print
+  register: mikrotik_fw_filter
+
+- name: Show firewall filter rules
+  ansible.builtin.debug:
+    var: mikrotik_fw_filter.stdout_lines
+
