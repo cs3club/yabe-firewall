@@ -1,4 +1,4 @@
-# 2026-10-13 19:05:33 by RouterOS 7.23.7
+# 2026-10-13 21:19:44 by RouterOS 7.23.7
 # software id = IN5Y-SSMF
 #
 /interface ethernet
@@ -13,12 +13,18 @@ add address=10.30.1.3/24 comment="outside to debian-router" interface=ether1 \
     network=10.30.1.0
 add address=10.30.10.1/24 comment="inside linux segment gateway" interface=\
     ether2 network=10.30.10.0
+/ip firewall address-list
+add address=10.30.10.10 comment=web01 list=linux-servers
+add address=10.30.10.11 comment=mail01 list=linux-servers
+add address=10.30.10.12 comment=db01 list=linux-servers
+add address=10.30.10.13 comment=fs01 list=linux-servers
 /ip firewall filter
-add action=accept chain=input comment=input:establsihed/related \
+add action=accept chain=input comment=input:established/related \
     connection-state=established,related
 add action=drop chain=input comment="input:drop invalid" connection-state=\
     invalid
-add action=accept chain=input comment="input:allow ping" protocol=icmp
+add action=accept chain=input comment="input:allow ping" protocol=icmp \
+    src-address=10.30.10.0/24
 add action=accept chain=input comment=\
     "input: ssh and winbox from linux segment" dst-port=22,8291 protocol=tcp \
     src-address=10.30.10.0/24
@@ -29,6 +35,17 @@ add action=drop chain=forward comment="forward:drop invalid" \
     connection-state=invalid
 add action=accept chain=forward comment="forward: Linux segment outbound" \
     in-interface=ether2 out-interface=ether1
+add action=accept chain=forward comment="forward: scored HTTP/HTTPS to web01" \
+    dst-address=10.30.10.10 dst-port=80,443 in-interface=ether1 \
+    out-interface=ether2 protocol=tcp
+add action=accept chain=forward comment=scored-mail01 dst-address=10.30.10.11 \
+    dst-port=25,587,110,143,993,995 in-interface=ether1 out-interface=ether2 \
+    protocol=tcp
+add action=accept chain=forward comment=scored-fs01 dst-address=10.30.10.13 \
+    dst-port=21,990 in-interface=ether1 out-interface=ether2 protocol=tcp
+add action=accept chain=forward comment=scored-ssh dst-address-list=\
+    linux-servers dst-port=22 in-interface=ether1 out-interface=ether2 \
+    protocol=tcp
 add action=drop chain=forward comment="forward: default deny"
 /system identity
 set name=mikrotik
