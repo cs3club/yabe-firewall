@@ -1,0 +1,19 @@
+# restricts ssh and winbox to admin host and disables unneeded services
+# commands are skipped during --check so the preview shows what would change
+
+- name: Show planned management changes
+  ansible.builtin.debug:
+    msg: "Will restrict SSH and Winbox to {{ mikrotik_admin_host }} and disable telnet, ftp, www, api"
+
+- name: Restrict SSH and Winbox to admin host
+  community.routeros.command:
+    commands:
+      - "/ip service set ssh address={{ mikrotik_admin_host }}"
+      - "/ip sercvice set winbox address={{ mikrotik_admin_host }}"
+  when: not ansible_check_mode
+
+- name: Disable services that are not needed
+  community.routeros.command:
+    commands:
+      - "/ip service disable telnet,ftp,www,www-ssl,api,api-ssl"
+  when: not ansible_check_mode
