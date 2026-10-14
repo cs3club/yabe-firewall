@@ -3,7 +3,7 @@
 - name: Read current firewall filter rules
   community.routeros.command:
     commands:
-      - /ip firewall filter print
+      - /ip firewall filter print terse
   register: mikrotik_fw_filter
 
 - name: Show firewall filter rules
