@@ -1,4 +1,4 @@
-# 2026-10-13 21:19:44 by RouterOS 7.23.7
+# 2026-10-14 21:09:28 by RouterOS 7.23.7
 # software id = IN5Y-SSMF
 #
 /interface ethernet
@@ -27,14 +27,21 @@ add action=accept chain=input comment="input:allow ping" protocol=icmp \
     src-address=10.30.10.0/24
 add action=accept chain=input comment=\
     "input: ssh and winbox from linux segment" dst-port=22,8291 protocol=tcp \
-    src-address=10.30.10.0/24
+    src-address=10.30.10.22
 add action=drop chain=input comment="input:default deny"
 add action=accept chain=forward comment=forward:established/related \
     connection-state=established,related
+add action=drop chain=forward comment=spoof-loopback in-interface=ether1 \
+    src-address=127.0.0.0/8
 add action=drop chain=forward comment="forward:drop invalid" \
     connection-state=invalid
 add action=accept chain=forward comment="forward: Linux segment outbound" \
     in-interface=ether2 out-interface=ether1
+add action=add-src-to-address-list address-list=port-scanners \
+    address-list-timeout=1d chain=forward comment=detect-port-scan \
+    in-interface=ether1 protocol=tcp psd=21,3s,3,1
+add action=drop chain=forward comment=drop-port-scanners src-address-list=\
+    port-scanners
 add action=accept chain=forward comment="forward: scored HTTP/HTTPS to web01" \
     dst-address=10.30.10.10 dst-port=80,443 in-interface=ether1 \
     out-interface=ether2 protocol=tcp
@@ -47,5 +54,13 @@ add action=accept chain=forward comment=scored-ssh dst-address-list=\
     linux-servers dst-port=22 in-interface=ether1 out-interface=ether2 \
     protocol=tcp
 add action=drop chain=forward comment="forward: default deny"
+/ip service
+set ftp disabled=yes
+set ssh address=10.30.10.22/32
+set telnet disabled=yes
+set www disabled=yes
+set winbox address=10.30.10.22/32
+set api disabled=yes
+set api-ssl disabled=yes
 /system identity
 set name=mikrotik
