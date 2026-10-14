@@ -1,0 +1,26 @@
+# lists current firewall filter rules. changes nothing.
+
+- name: Read current firewall filter rules
+  community.routeros.command:
+    commands:
+      - /ip firewall filter print terse
+  register: mikrotik_fw_filter
+
+- name: Show firewall filter rules
+  ansible.builtin.debug:
+    var: mikrotik_fw_filter.stdout_lines
+
+- name: Check baseline rule comments are present
+  ansible.builtin.assert:
+    that:
+      - "'input:established/related' in mikrotik_fw_filter.stdout[0]"
+      - "'input:drop invalid' in mikrotik_fw_filter.stdout[0]"
+      - "'input:allow ping' in mikrotik_fw_filter.stdout[0]"
+      - "'input: ssh and winbox from linux segment' in mikrotik_fw_filter.stdout[0]"
+      - "'input:default deny' in mikrotik_fw_filter.stdout[0]"
+      - "'forward:established/related' in mikrotik_fw_filter.stdout[0]"
+      - "'forward:drop invalid' in mikrotik_fw_filter.stdout[0]"
+      - "'forward: Linux segment outbound' in mikrotik_fw_filter.stdout[0]"
+      - "'forward: default deny' in mikrotik_fw_filter.stdout[0]"
+    fail_msg: "A bseline rule is missing or renamed. Compare with /ip firewall filter print on the router."
+    success_msg: "All nine baseline rules are present"

@@ -9,6 +9,6 @@ collections:
     # sysctl, mount, firewalld, authorized_key and other POSIX modules
     # Docs: https://docs.ansible.com/ansible/latest/collections/ansible/posix/
 
-  - name: community.general
-    # Large collection of general purpose modules
-    # Docs: https://docs.ansible.com/ansible/latest/collections/community/general/
+  - name: community.routeros
+    # RouterOS modules for MikroTik devices
+    # Docs: https://docs.ansible.com/ansible/latest/collections/community/router0s/
