@@ -8,7 +8,7 @@
 
 - name: All plays
   hosts: all
-  become: true
+  become: false
   gather_facts: true
   roles: []
   # Add roles here as you build them, e.g.:
