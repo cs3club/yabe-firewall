@@ -1,4 +1,4 @@
-# 2026-10-14 21:09:28 by RouterOS 7.23.7
+# 2026-10-14 22:06:03 by RouterOS 7.23.7
 # software id = IN5Y-SSMF
 #
 /interface ethernet
@@ -54,6 +54,8 @@ add action=accept chain=forward comment=scored-ssh dst-address-list=\
     linux-servers dst-port=22 in-interface=ether1 out-interface=ether2 \
     protocol=tcp
 add action=drop chain=forward comment="forward: default deny"
+/ip route
+add dst-address=0.0.0.0/0 gateway=10.30.1.2
 /ip service
 set ftp disabled=yes
 set ssh address=10.30.10.22/32
