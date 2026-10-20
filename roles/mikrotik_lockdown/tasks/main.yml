@@ -9,7 +9,7 @@
   community.routeros.command:
     commands:
       - "/ip service set ssh address={{ mikrotik_admin_host }}"
-      - "/ip sercvice set winbox address={{ mikrotik_admin_host }}"
+      - "/ip service set winbox address={{ mikrotik_admin_host }}"
   when: not ansible_check_mode
 
 - name: Disable services that are not needed
