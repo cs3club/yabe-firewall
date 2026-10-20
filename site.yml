@@ -14,7 +14,3 @@
       tags: mikrotik
     - role: mikrotik_lockdown
       tags: mikrotik-lockdown
-  # Add roles here as you build them, e.g.:
-  # roles:
-  #   - role: vyos
-  #     tags: vyos
