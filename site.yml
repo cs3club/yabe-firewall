@@ -8,10 +8,21 @@
 
 - name: All plays
   hosts: all
-  become: true
+  become: false
   gather_facts: true
   roles: []
   # Add roles here as you build them, e.g.:
   # roles:
   #   - role: vyos
   #     tags: vyos
+
+- name: pfSense firewall
+  hosts: pfsense
+  become: true
+  gather_facts: false
+  vars_files:
+    - vars/main.yml
+    - vars/secrets.yml
+  roles:
+    - role: pfsense
+    - role: pfsense
