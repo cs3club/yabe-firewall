@@ -12,3 +12,7 @@ collections:
   - name: community.general
     # Large collection of general purpose modules
     # Docs: https://docs.ansible.com/ansible/latest/collections/community/general/
+  - name: pfsensible.core
+    version: "0.7.1"
+    # pfSense modules: general setup, interfaces, rules, aliases and more
+    # Docs: https://github.com/pfsensible/core
