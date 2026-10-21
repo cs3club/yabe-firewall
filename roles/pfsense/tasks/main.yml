@@ -1,5 +1,6 @@
 ---
-- name: Placeholder for pfSense tasks
-  ansible.builtin.debug:
-    msg: "pfSense role loaded"
+- name: Set hostname and domain
+  pfsensible.core.pfsense_setup:
+    hostname: "{{ inventory_hostname }}"
+    domain: "{{ domain }}"
 
