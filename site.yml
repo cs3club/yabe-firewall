@@ -8,6 +8,11 @@
 
 - name: Firewall devices
   hosts: firewalls
+  # gather_facts: false is required for network devices running RouterOS.
+  # Ansible's fact gathering module targets Linux systems and will fail
+  # on MikroTik. This applies to all network devices in this repo —
+  # VyOS, pfSense, and the Debian router will each handle facts differently
+  # when their roles are added.
   gather_facts: false
   roles:
     - role: mikrotik
