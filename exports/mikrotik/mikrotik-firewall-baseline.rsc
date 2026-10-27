@@ -1,5 +1,8 @@
-# 2026-10-14 22:06:03 by RouterOS 7.23.7
+# 2026-10-26 by RouterOS 7.23.7
 # software id = IN5Y-SSMF
+# Baseline configuration export for MikroTik Linux segment firewall.
+# This file documents the known good baseline configuration.
+# To restore: log into RouterOS and run /import file=mikrotik-firewall-baseline.rsc
 #
 /interface ethernet
 set [ find default-name=ether1 ] disable-running-check=no
@@ -25,8 +28,8 @@ add action=drop chain=input comment="input:drop invalid" connection-state=\
     invalid
 add action=accept chain=input comment="input:allow ping" protocol=icmp \
     src-address=10.30.10.0/24
-add action=accept chain=input comment=\
-    "input: ssh and winbox from linux segment" dst-port=22,8291 protocol=tcp \
+add action=accept chain=input comment="input: ssh from admin host" \
+    dst-port=22 protocol=tcp \
     src-address=10.30.10.22
 add action=drop chain=input comment="input:default deny"
 add action=accept chain=forward comment=forward:established/related \
@@ -61,7 +64,7 @@ set ftp disabled=yes
 set ssh address=10.30.10.22/32
 set telnet disabled=yes
 set www disabled=yes
-set winbox address=10.30.10.22/32
+set winbox disabled=yes
 set api disabled=yes
 set api-ssl disabled=yes
 /system identity
