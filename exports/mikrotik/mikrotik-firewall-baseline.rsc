@@ -65,6 +65,7 @@ set ssh address=10.30.10.22/32
 set telnet disabled=yes
 set www disabled=yes
 set winbox disabled=yes
+set reverse-proxy disabled=yes
 set api disabled=yes
 set api-ssl disabled=yes
 /system identity
