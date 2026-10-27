@@ -1,4 +1,12 @@
-# lists current firewall filter rules. changes nothing.
+---
+# roles/mikrotik/tasks/main.yml
+# Read-only verification role — lists current firewall filter rules and
+# asserts that all nine baseline rules are present by checking their comments.
+# This role makes no changes to the router.
+#
+# community.routeros.command is used intentionally here over the API module
+# because this role only reads output. The API module is better suited for
+# making changes. Using command keeps this role simple and easy to debug.
 
 - name: Read current firewall filter rules
   community.routeros.command:
@@ -22,5 +30,5 @@
       - "'forward:drop invalid' in mikrotik_fw_filter.stdout[0]"
       - "'forward: Linux segment outbound' in mikrotik_fw_filter.stdout[0]"
       - "'forward: default deny' in mikrotik_fw_filter.stdout[0]"
-    fail_msg: "A bseline rule is missing or renamed. Compare with /ip firewall filter print on the router."
+    fail_msg: "A baseline rule is missing or renamed. Compare with /ip firewall filter print on the router."
     success_msg: "All nine baseline rules are present"
