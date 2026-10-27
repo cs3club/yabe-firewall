@@ -1,3 +1,19 @@
 ---
-mikrotik_admin_host: "10.30.10.22/32"
+# roles/mikrotik_lockdown/defaults/main.yml
+#
+# Default variables for the mikrotik_lockdown role.
+# These are intentionally in defaults/ (not vars/) because they are
+# meant to be overridden per environment or per team member.
+#
+# defaults/ is the lowest priority in Ansible's variable hierarchy —
+# any value defined in inventory, vars/main.yml, or on the command line
+# will automatically override these without touching this file.
+#
+# To override for your environment, define mikrotik_admin_host in
+# vars/main.yml or pass it on the command line:
+#   ansible-playbook site.yml -e "mikrotik_admin_host=10.30.10.23/32"
 
+# The host allowed to reach MikroTik management services (SSH).
+# Restricts /ip service ssh and winbox to this address only.
+# Default is WRK03 (10.30.10.22) — the designated admin workstation.
+mikrotik_admin_host: "10.30.10.22/32"
