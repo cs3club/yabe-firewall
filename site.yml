@@ -6,16 +6,6 @@
 #   ansible-playbook site.yml                  (apply)
 #   ansible-playbook site.yml --tags <tag>     (run one role only)
 
-- name: All plays
-  hosts: all
-  become: false
-  gather_facts: true
-  roles: []
-  # Add roles here as you build them, e.g.:
-  # roles:
-  #   - role: vyos
-  #     tags: vyos
-
 - name: pfSense firewall
   hosts: pfsense
   become: false
@@ -25,3 +15,4 @@
     - vars/secrets.yml
   roles:
     - role: pfsense
+      tags: pfsense
