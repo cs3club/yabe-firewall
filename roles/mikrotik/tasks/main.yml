@@ -7,6 +7,9 @@
 # community.routeros.command is used intentionally here over the API module
 # because this role only reads output. The API module is better suited for
 # making changes. Using command keeps this role simple and easy to debug.
+#
+# NOTE: community.routeros.command skips during --check mode since it cannot
+# simulate router commands. Run without --check to actually verify rules.
 
 - name: Read current firewall filter rules
   community.routeros.command:
