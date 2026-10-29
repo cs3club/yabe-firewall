@@ -14,7 +14,7 @@
 - name: Read current firewall filter rules
   community.routeros.command:
     commands:
-      - /ip firewall filter print terse
+      - ip firewall filter print terse
   register: mikrotik_fw_filter
 
 - name: Show firewall filter rules
@@ -33,5 +33,5 @@
       - "'forward:drop invalid' in mikrotik_fw_filter.stdout[0]"
       - "'forward: Linux segment outbound' in mikrotik_fw_filter.stdout[0]"
       - "'forward: default deny' in mikrotik_fw_filter.stdout[0]"
-    fail_msg: "A baseline rule is missing or renamed. Compare with /ip firewall filter print on the router."
+    fail_msg: "A baseline rule is missing or renamed. Compare with ip firewall filter print on the router."
     success_msg: "All nine baseline rules are present"

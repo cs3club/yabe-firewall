@@ -7,7 +7,7 @@
 #   ansible-playbook site.yml --tags <tag>     (run one role only)
 
 - name: Firewall devices
-  hosts: firewalls
+  hosts: all
   # gather_facts: false is required for network devices running RouterOS.
   # Ansible's fact gathering module targets Linux systems and will fail
   # on MikroTik. This applies to all network devices in this repo —

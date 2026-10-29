@@ -14,7 +14,7 @@
 - name: Restrict SSH to admin host
   community.routeros.command:
     commands:
-      - "/ip service set ssh address={{ mikrotik_admin_host }}"
+      - "ip service set ssh address={{ mikrotik_admin_host }}"
   # when: not ansible_check_mode skips this task during --check (dry run) mode.
   # community.routeros.command cannot simulate changes on RouterOS the way
   # Linux modules can, so we skip it entirely during dry runs rather than
@@ -24,6 +24,6 @@
 - name: Disable all unneeded services including Winbox
   community.routeros.command:
     commands:
-      - "/ip service disable telnet,ftp,www,www-ssl,winbox,api,api-ssl"
+      - "ip service disable telnet,ftp,www,www-ssl,winbox,api,api-ssl"
   # Same reasoning as above — skip during --check mode.
   when: not ansible_check_mode
