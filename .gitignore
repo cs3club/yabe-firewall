@@ -1,8 +1,9 @@
 # .gitignore
 
 # ── Secrets ───────────────────────────────────────────────────────
+# secrets.yml is plaintext — never committed
 vars/secrets.yml
-*secret*
+# secrets.enc.yml is SOPS encrypted — safe to commit (see Exceptions below)
 *password*
 *credentials*
 *.pem
@@ -41,3 +42,5 @@ venv/
 
 # ── Exceptions ────────────────────────────────────────────────────
 !vars/secrets.yml.example
+!vars/secrets.enc.yml
+sops-v*.linux.amd64
