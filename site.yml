@@ -6,12 +6,16 @@
 #   ansible-playbook site.yml                  (apply)
 #   ansible-playbook site.yml --tags <tag>     (run one role only)
 
-- name: All plays
+- name: Yabe range firewall devices
   hosts: all
-  become: true
-  gather_facts: true
-  roles: []
-  # Add roles here as you build them, e.g.:
-  # roles:
-  #   - role: vyos
-  #     tags: vyos
+  # gather_facts: false is required for network devices running RouterOS.
+  # Ansible's fact gathering module targets Linux systems and will fail
+  # on MikroTik. This applies to all network devices in this repo —
+  # VyOS, pfSense, and the Debian router will each handle facts differently
+  # when their roles are added.
+  gather_facts: false
+  roles:
+    - role: mikrotik
+      tags: mikrotik
+    - role: mikrotik_lockdown
+      tags: mikrotik-lockdown

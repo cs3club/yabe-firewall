@@ -1,0 +1,19 @@
+---
+# .sops.yaml
+# SOPS configuration file — tells SOPS which key to use for encryption.
+# This file is committed to git. The public key here is safe to share.
+# The private key lives only in ~/.config/sops/age/keys.txt on each
+# team member's machine and is NEVER committed to git.
+#
+# To add a new team member:
+# 1. They generate their own age key with: age-keygen -o ~/.config/sops/age/keys.txt
+# 2. They share their public key (age1...)
+# 3. Add their public key to the keys list below
+# 4. Re-encrypt the secrets file with: sops updatekeys vars/secrets.enc.yml
+
+creation_rules:
+  - path_regex: vars/secrets(\.enc)?\.yml$
+    key_groups:
+      - age:
+          # b.plunko - Debian workstation
+          - age1p7ymugjwvql6sr8fatkm08dndprjh79kpfthlvn2z32t4l4jmv3qgfzvn2

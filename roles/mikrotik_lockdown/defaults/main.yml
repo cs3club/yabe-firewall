@@ -1,0 +1,8 @@
+---
+# roles/mikrotik_lockdown/defaults/main.yml
+# Default variables for the mikrotik_lockdown role.
+# Override these in inventory or with -e on the command line.
+
+# The host allowed to reach MikroTik management services (SSH).
+# Default is WRK03 (10.30.10.22) — the designated admin workstation.
+mikrotik_admin_host: "10.30.10.22/32"

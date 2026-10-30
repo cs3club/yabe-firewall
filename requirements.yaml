@@ -1,0 +1,33 @@
+---
+# requirements.yml
+# Ansible collections this project depends on.
+# Install all of them with:
+#   ansible-galaxy collection install -r requirements.yml
+#
+# Versions are pinned to ensure every team member and every run uses
+# the same known-working collection versions. When upgrading a collection,
+# test it first and update the version here deliberately rather than
+# letting it update automatically.
+
+collections:
+  - name: ansible.netcommon
+    version: "8.1.0"
+    # Required for network_cli connection type used by MikroTik inventory.
+    # Docs: https://docs.ansible.com/ansible/latest/collections/ansible/netcommon/
+
+  - name: ansible.posix
+    version: "2.1.0"
+    # POSIX modules: sysctl, mount, firewalld, authorized_key and others.
+    # Not used by MikroTik roles — will be needed when Debian router role
+    # is added since the Debian router runs Linux.
+    # Docs: https://docs.ansible.com/ansible/latest/collections/ansible/posix/
+
+  - name: community.general
+    version: "11.2.1"
+    # Large collection of general purpose modules used across many roles.
+    # Docs: https://docs.ansible.com/ansible/latest/collections/community/general/
+
+  - name: community.routeros
+    version: "3.10.0"
+    # RouterOS modules for MikroTik devices.
+    # Docs: https://docs.ansible.com/ansible/latest/collections/community/routeros/
