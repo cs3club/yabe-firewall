@@ -17,17 +17,56 @@
       - ip firewall filter print terse
   register: mikrotik_fw_filter
 
-- name: Check baseline rule comments are present
+- name: Assert input established/related rule is present
   ansible.builtin.assert:
-    that:
-      - "'input:established/related' in mikrotik_fw_filter.stdout[0]"
-      - "'input:drop invalid' in mikrotik_fw_filter.stdout[0]"
-      - "'input:allow ping' in mikrotik_fw_filter.stdout[0]"
-      - "'input: ssh and winbox from linux segment' in mikrotik_fw_filter.stdout[0]"
-      - "'input:default deny' in mikrotik_fw_filter.stdout[0]"
-      - "'forward:established/related' in mikrotik_fw_filter.stdout[0]"
-      - "'forward:drop invalid' in mikrotik_fw_filter.stdout[0]"
-      - "'forward: Linux segment outbound' in mikrotik_fw_filter.stdout[0]"
-      - "'forward: default deny' in mikrotik_fw_filter.stdout[0]"
-    fail_msg: "A baseline rule is missing or renamed. Compare with ip firewall filter print on the router."
-    success_msg: "All nine baseline rules are present"
+    that: "'input:established/related' in mikrotik_fw_filter.stdout[0]"
+    fail_msg: "MISSING: input:established/related rule"
+    success_msg: "OK: input:established/related"
+
+- name: Assert input drop invalid rule is present
+  ansible.builtin.assert:
+    that: "'input:drop invalid' in mikrotik_fw_filter.stdout[0]"
+    fail_msg: "MISSING: input:drop invalid rule"
+    success_msg: "OK: input:drop invalid"
+
+- name: Assert input allow ping rule is present
+  ansible.builtin.assert:
+    that: "'input:allow ping' in mikrotik_fw_filter.stdout[0]"
+    fail_msg: "MISSING: input:allow ping rule"
+    success_msg: "OK: input:allow ping"
+
+- name: Assert input ssh from admin host rule is present
+  ansible.builtin.assert:
+    that: "'input: ssh and winbox from linux segment' in mikrotik_fw_filter.stdout[0]"
+    fail_msg: "MISSING: input ssh from admin host rule"
+    success_msg: "OK: input ssh from admin host"
+
+- name: Assert input default deny rule is present
+  ansible.builtin.assert:
+    that: "'input:default deny' in mikrotik_fw_filter.stdout[0]"
+    fail_msg: "MISSING: input:default deny rule"
+    success_msg: "OK: input:default deny"
+
+- name: Assert forward established/related rule is present
+  ansible.builtin.assert:
+    that: "'forward:established/related' in mikrotik_fw_filter.stdout[0]"
+    fail_msg: "MISSING: forward:established/related rule"
+    success_msg: "OK: forward:established/related"
+
+- name: Assert forward drop invalid rule is present
+  ansible.builtin.assert:
+    that: "'forward:drop invalid' in mikrotik_fw_filter.stdout[0]"
+    fail_msg: "MISSING: forward:drop invalid rule"
+    success_msg: "OK: forward:drop invalid"
+
+- name: Assert forward Linux segment outbound rule is present
+  ansible.builtin.assert:
+    that: "'forward: Linux segment outbound' in mikrotik_fw_filter.stdout[0]"
+    fail_msg: "MISSING: forward Linux segment outbound rule"
+    success_msg: "OK: forward Linux segment outbound"
+
+- name: Assert forward default deny rule is present
+  ansible.builtin.assert:
+    that: "'forward: default deny' in mikrotik_fw_filter.stdout[0]"
+    fail_msg: "MISSING: forward default deny rule"
+    success_msg: "OK: forward default deny"
