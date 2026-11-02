@@ -1,8 +1,3 @@
-# .gitignore
-
-# ── Secrets ───────────────────────────────────────────────────────
-vars/secrets.yml
-vars/secrets.enc.yml
 vars/secrets.sops.yml
 *secret*
 *password*
@@ -45,4 +40,4 @@ venv/
 sops-v*.linux.amd64
 
 # ── Exceptions ────────────────────────────────────────────────────
-!vars/secrets.yml.example
+!vars/secrets.sops.yml.example

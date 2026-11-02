@@ -12,7 +12,7 @@
 # 4. Re-encrypt the secrets file with: sops updatekeys vars/secrets.enc.yml
 
 creation_rules:
-  - path_regex: vars/secrets(\.enc)?\.yml$
+  - path_regex: vars/secrets.sops.yml$
     key_groups:
       - age:
           # b.plunko - Debian workstation
