@@ -1,0 +1,8 @@
+---
+- name: Create address and port aliases
+  pfsensible.core.pfsense_alias:
+    name: "{{ item.name }}"
+    type: "{{ item.type }}"
+    address: "{{ item.address }}"
+    state: present
+  loop: "{{ pf_aliases }}"
