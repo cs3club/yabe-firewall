@@ -14,8 +14,8 @@ pf_dns_servers:
 
 # The two network cards. CHECK THESE NAMES on the VM (Interfaces > Assignments).
 pf_interfaces:
-  - { descr: WAN, interface: vtnet0, ip: 10.30.1.4, prefix: 24, blockpriv: false, blockbogons: false }
-  - { descr: LAN, interface: vtnet1, ip: 10.30.20.1, prefix: 24, blockpriv: false, blockbogons: false }
+  - { descr: WAN, interface: em0, ip: 10.30.1.4, prefix: 24, blockpriv: false, blockbogons: false }
+  - { descr: LAN, interface: em1, ip: 10.30.20.1, prefix: 24, blockpriv: false, blockbogons: false }
 
 # Where pfSense sends traffic it doesn't know about: the Debian router
 pf_gateway:
