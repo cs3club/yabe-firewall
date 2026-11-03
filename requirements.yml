@@ -12,3 +12,5 @@ collections:
   - name: community.general
     # Large collection of general purpose modules
     # Docs: https://docs.ansible.com/ansible/latest/collections/community/general/
+    
+  - name: pfsensible.core
