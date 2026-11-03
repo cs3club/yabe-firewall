@@ -1,9 +1,8 @@
 ---
-- name: Set default gateway to the Debian router
+- name: Create gateway to the Debian router
   pfsensible.core.pfsense_gateway:
     name: "{{ pf_gateway.name }}"
     interface: "{{ pf_gateway.interface }}"
     gateway: "{{ pf_gateway.ip }}"
     descr: "Debian router"
-    defaultgw: true
     state: present
