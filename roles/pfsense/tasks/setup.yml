@@ -4,4 +4,4 @@
     hostname: "{{ pf_hostname }}"
     domain: "{{ domain }}"
     timezone: "{{ pf_timezone }}"
-    dns_addresses: "{{ pf_dns_servers }}"
+    dns_addresses: "{{ pf_dns_servers | join(' ') }}"
