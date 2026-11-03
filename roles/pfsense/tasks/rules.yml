@@ -1,0 +1,12 @@
+---
+- name: Create firewall rules
+  pfsensible.core.pfsense_rule:
+    name: "{{ item.name }}"
+    action: pass
+    interface: "{{ item.interface }}"
+    protocol: "{{ item.protocol }}"
+    source: "{{ item.source }}"
+    destination: "{{ item.destination }}"
+    destination_port: "{{ item.destination_port | default(omit) }}"
+    state: present
+  loop: "{{ pf_rules }}"
