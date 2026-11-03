@@ -1,4 +1,5 @@
 ---
 ansible_user: svc_ansible
-ansible_become: false
+ansible_become: true
+ansible_become_method: sudo
 ansible_python_interpreter: /usr/local/bin/python3.11
