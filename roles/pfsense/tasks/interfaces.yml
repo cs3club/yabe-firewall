@@ -5,8 +5,8 @@
     interface: "{{ item.interface }}"
     enable: true
     ipv4_type: static
-    ip_address: "{{ item.ip }}"
-    subnet: "{{ item.prefix }}"
+    ipv4_address: "{{ item.ip }}"
+    ipv4_prefixlen: "{{ item.prefix }}"
     blockpriv: "{{ item.blockpriv }}"
     blockbogons: "{{ item.blockbogons }}"
     state: present
