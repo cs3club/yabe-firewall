@@ -1,0 +1,29 @@
+---
+# roles/mikrotik_lockdown/tasks/main.yml
+# Restricts SSH to the admin host only and disables all unneeded services.
+#
+# community.routeros.command is used intentionally over community.routeros.api_modify
+# because this repo manages MikroTik over SSH with the API service disabled.
+# Using the API module would require the API service to be enabled, which
+# expands the attack surface. SSH-based management is more secure.
+
+- name: Show planned management changes
+  ansible.builtin.debug:
+    msg: "Will restrict SSH to {{ mikrotik_admin_host }} and disable telnet, ftp, www, www-ssl, winbox, api, api-ssl"
+
+- name: Restrict SSH to admin host
+  community.routeros.command:
+    commands:
+      - "ip service set ssh address={{ mikrotik_admin_host }}"
+  # when: not ansible_check_mode skips this task during --check (dry run) mode.
+  # community.routeros.command cannot simulate changes on RouterOS the way
+  # Linux modules can, so we skip it entirely during dry runs rather than
+  # having it fail or give misleading output.
+  when: not ansible_check_mode
+
+- name: Disable all unneeded services including Winbox
+  community.routeros.command:
+    commands:
+      - "ip service disable telnet,ftp,www,www-ssl,winbox,api,api-ssl"
+  # Same reasoning as above — skip during --check mode.
+  when: not ansible_check_mode
