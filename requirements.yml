@@ -14,3 +14,4 @@ collections:
     # Docs: https://docs.ansible.com/ansible/latest/collections/community/general/
     
   - name: pfsensible.core
+    version: "0.7.1"
