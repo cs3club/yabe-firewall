@@ -17,12 +17,6 @@ pf_interfaces:
   - { descr: WAN, interface: em0, ip: 10.30.1.4, prefix: 24, blockpriv: false, blockbogons: false }
   - { descr: LAN, interface: em1, ip: 10.30.20.1, prefix: 24, blockpriv: false, blockbogons: false }
 
-# Where pfSense sends traffic it doesn't know about: the Debian router
-pf_gateway:
-  name: UPSTREAM_GW
-  ip: 10.30.1.2
-  interface: wan
-
 # Named groups of addresses and ports, so rules are easy to read
 pf_aliases:
   - { name: mgmt_net,     type: network, address: "10.30.1.0/24" }
