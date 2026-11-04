@@ -3,8 +3,6 @@
   tags: [pfsense, setup]
 - import_tasks: interfaces.yml
   tags: [pfsense, interfaces]
-- import_tasks: gateway.yml
-  tags: [pfsense, gateway]
 - import_tasks: aliases.yml
   tags: [pfsense, aliases]
 - import_tasks: rules.yml
