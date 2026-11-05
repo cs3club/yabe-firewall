@@ -6,10 +6,12 @@
 
 collections:
   - name: ansible.posix
+    version: "2.2.2"
     # sysctl, mount, firewalld, authorized_key and other POSIX modules
     # Docs: https://docs.ansible.com/ansible/latest/collections/ansible/posix/
 
   - name: community.general
+    version: "13.5.0"
     # Large collection of general purpose modules
     # Docs: https://docs.ansible.com/ansible/latest/collections/community/general/
     
