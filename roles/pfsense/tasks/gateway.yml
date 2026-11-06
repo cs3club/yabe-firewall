@@ -1,8 +1,0 @@
----
-- name: Create gateway to the Debian router
-  pfsensible.core.pfsense_gateway:
-    name: "{{ pf_gateway.name }}"
-    interface: "{{ pf_gateway.interface }}"
-    gateway: "{{ pf_gateway.ip }}"
-    descr: "Debian router"
-    state: present
