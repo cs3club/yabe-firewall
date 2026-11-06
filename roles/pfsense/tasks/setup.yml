@@ -1,0 +1,7 @@
+---
+- name: Set hostname, domain, DNS and timezone
+  pfsensible.core.pfsense_setup:
+    hostname: "{{ pf_hostname }}"
+    domain: "{{ domain }}"
+    timezone: "{{ pf_timezone }}"
+    dns_addresses: "{{ pf_dns_servers | join(' ') }}"

@@ -1,6 +1,44 @@
 ---
 # vars/main.yml
 # Non-secret variables for this project.
-# All tunable values live here — never hardcoded in tasks.
+# All tunable values live here, never hardcoded in tasks.
 
 domain: "yabe.corp"
+pf_hostname: "pfsense"
+pf_timezone: "Etc/UTC"
+
+# DNS servers pfSense uses (the two domain controllers)
+pf_dns_servers:
+  - 10.30.20.10
+  - 10.30.20.11
+
+# The two network cards. CHECK THESE NAMES on the VM (Interfaces > Assignments).
+pf_interfaces:
+  - { descr: WAN, interface: em0, ip: 10.30.1.4, prefix: 24, blockpriv: false, blockbogons: false }
+  - { descr: LAN, interface: em1, ip: 10.30.20.1, prefix: 24, blockpriv: false, blockbogons: false }
+
+# Named groups of addresses and ports, so rules are easy to read
+pf_aliases:
+  - { name: mgmt_net,     type: network, address: "10.30.1.0/24" }
+  - { name: win_dcs,      type: host,    address: "10.30.20.10 10.30.20.11" }
+  - { name: win_fs,       type: host,    address: "10.30.20.12" }
+  - { name: win_app,      type: host,    address: "10.30.20.13" }
+  - { name: win_wrks,     type: host,    address: "10.30.20.20 10.30.20.21 10.30.20.22 10.30.20.23" }
+  - { name: win_net,      type: network, address: "10.30.20.0/24" }
+  - { name: mgmt_ports,   type: port,    address: "22 443" }
+  - { name: web_ports,    type: port,    address: "80 443" }
+  - { name: ldap_ports,   type: port,    address: "389 636" }
+
+# Firewall rules. These are the scored services from the planning document.
+# Today's rules are the simple version. Tighten them during hardening week.
+pf_rules:
+  - { name: "Allow management from transit net", interface: wan, protocol: tcp, source: mgmt_net, destination: "10.30.1.4", destination_port: mgmt_ports }
+  - { name: "Allow ping",           interface: wan, protocol: icmp,    source: any, destination: any }
+  - { name: "Allow web to APP01",   interface: wan, protocol: tcp,     source: any, destination: win_app, destination_port: web_ports }
+  - { name: "Allow DNS to DCs",     interface: wan, protocol: tcp/udp, source: any, destination: win_dcs, destination_port: "53" }
+  - { name: "Allow Kerberos to DCs", interface: wan, protocol: tcp/udp, source: any, destination: win_dcs, destination_port: "88" }
+  - { name: "Allow LDAP to DCs",    interface: wan, protocol: tcp,     source: any, destination: win_dcs, destination_port: ldap_ports }
+  - { name: "Allow NTP to DCs",     interface: wan, protocol: udp,     source: any, destination: win_dcs, destination_port: "123" }
+  - { name: "Allow SMB to FS01",    interface: wan, protocol: tcp,     source: any, destination: win_fs, destination_port: "445" }
+  - { name: "Allow RDP to workstations", interface: wan, protocol: tcp, source: any, destination: win_wrks, destination_port: "3389" }
+  - { name: "Windows segment out",  interface: lan, protocol: any,     source: win_net, destination: any }
