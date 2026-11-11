@@ -1,4 +1,4 @@
-vars/secrets.sops.yml
+vars/secrets.sops.yml  # encrypted secrets — never commit plaintext or encrypted
 *secret*
 *password*
 *credentials*
@@ -40,4 +40,4 @@ venv/
 sops-v*.linux.amd64
 
 # ── Exceptions ────────────────────────────────────────────────────
-!vars/secrets.sops.yml.example
+!vars/secrets.sops.yml  # encrypted secrets — never commit plaintext or encrypted.example

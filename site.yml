@@ -12,8 +12,6 @@
   roles:
     - role: mikrotik
       tags: mikrotik
-    - role: mikrotik_lockdown
-      tags: mikrotik-lockdown
 
 - name: pfSense firewall
   hosts: pfsense
