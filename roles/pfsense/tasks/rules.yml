@@ -1,0 +1,29 @@
+---
+- name: Validate rule definitions
+  ansible.builtin.assert:
+    that:
+      - item.name is defined
+      - item.interface is defined
+      - item.protocol is defined
+      - item.source is defined
+      - item.destination is defined
+      - item.protocol not in ['tcp', 'udp', 'tcp/udp'] or item.destination_port is defined
+    fail_msg: "Rule '{{ item.name | default('unnamed') }}' is missing a required field, or is tcp/udp without destination_port"
+    quiet: true
+  loop: "{{ pf_rules }}"
+  loop_control:
+    label: "{{ item.name | default('unnamed') }}"
+
+- name: Create firewall rules
+  pfsensible.core.pfsense_rule:
+    name: "{{ item.name }}"
+    action: pass
+    interface: "{{ item.interface }}"
+    protocol: "{{ item.protocol }}"
+    source: "{{ item.source }}"
+    destination: "{{ item.destination }}"
+    destination_port: "{{ item.destination_port | default(omit) }}"
+    state: present
+  loop: "{{ pf_rules }}"
+  loop_control:
+    label: "{{ item.name }}"

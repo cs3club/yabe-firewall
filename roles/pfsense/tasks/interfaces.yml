@@ -1,0 +1,13 @@
+---
+- name: Configure outside and inside interfaces
+  pfsensible.core.pfsense_interface:
+    descr: "{{ item.descr }}"
+    interface: "{{ item.interface }}"
+    enable: true
+    ipv4_type: static
+    ipv4_address: "{{ item.ip }}"
+    ipv4_prefixlen: "{{ item.prefix }}"
+    blockpriv: "{{ item.blockpriv }}"
+    blockbogons: "{{ item.blockbogons }}"
+    state: present
+  loop: "{{ pf_interfaces }}"
