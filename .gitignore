@@ -1,3 +1,7 @@
+# .gitignore
+
+# ── Secrets ───────────────────────────────────────────────────────
+vars/secrets.yml
 *secret*
 *password*
 *credentials*
@@ -35,7 +39,5 @@ venv/
 # ── Logs ──────────────────────────────────────────────────────────
 *.log
 
-# ── Build artifacts ───────────────────────────────────────────────
-sops-v*.linux.amd64
-
 # ── Exceptions ────────────────────────────────────────────────────
+!vars/secrets.sops.yml.example
