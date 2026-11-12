@@ -1,0 +1,7 @@
+---
+# roles/mikrotik/tasks/main.yml
+# Entry point for the mikrotik role.
+# Calls individual task files to keep concerns separated.
+
+- name: Run baseline firewall rule checks
+  ansible.builtin.import_tasks: check.yml

@@ -40,4 +40,4 @@ venv/
 *.log
 
 # ── Exceptions ────────────────────────────────────────────────────
-!vars/secrets.yml.example
+!vars/secrets.sops.yml.example

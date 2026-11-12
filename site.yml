@@ -6,6 +6,13 @@
 #   ansible-playbook site.yml                  (apply)
 #   ansible-playbook site.yml --tags <tag>     (run one role only)
 
+- name: Yabe range firewall devices
+  hosts: mikrotik
+  gather_facts: false
+  roles:
+    - role: mikrotik
+      tags: mikrotik
+
 - name: pfSense firewall
   hosts: pfsense
   become: false
