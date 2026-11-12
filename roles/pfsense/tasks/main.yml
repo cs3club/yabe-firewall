@@ -1,7 +1,9 @@
 ---
-- name: Placeholder for pfSense tasks
-  ansible.builtin.debug:
-    msg: "pfSense role loaded"
-  tags:
-    - pfsense
-    - placeholder
+- import_tasks: setup.yml
+  tags: [pfsense, setup]
+- import_tasks: interfaces.yml
+  tags: [pfsense, interfaces]
+- import_tasks: aliases.yml
+  tags: [pfsense, aliases]
+- import_tasks: rules.yml
+  tags: [pfsense, rules]
